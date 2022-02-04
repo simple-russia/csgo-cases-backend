@@ -63,8 +63,22 @@ class Weapon (models.Model):
 class Description (models.Model):
     id = models.AutoField(primary_key=True, null=False, blank=False)
     text = models.TextField(null=True, blank=True)
-    language = models.CharField(max_length=5, null=False, blank=False)
     weapon_id = models.ForeignKey(Weapon, on_delete=models.CASCADE)
+
+    RUSSIAN = 'ru'
+    ENGLISH = 'en'
+    SPANISH = 'es'
+    PORTUGUESE = 'pt'
+    GERMAN = 'de'
+
+    LANGUAGE_CHOICES = [
+        (RUSSIAN, 'Russian'),
+        (ENGLISH, 'English'),
+        (SPANISH, 'Spanish'),
+        (PORTUGUESE, 'Portuguese'),
+        (GERMAN, 'German'),
+    ]
+    language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES, null=False, blank=False)
 
     class Meta:
         db_table = "description"
