@@ -1,11 +1,11 @@
-# Documentation for the server API
-
-// for the main page where all the cases displayed
-# 1. https://example.com/api/get-all-cases/
+# 📋 Documentation for the server API
+<!-- <br></br> -->
+## 1. Get all the cases available
+### https://example.com/api/get-all-cases/
 Returns a JSON with data about all the available cases.
 
 Response example:
-```
+```JS
 [
     {
         id: 1,
@@ -24,13 +24,13 @@ Response example:
     ...
 ]
 ```
-
-// for the page of a case
-# 2. https://example.com/api/get-weapons?case=`case name`
+<br></br>
+## 2. Get all the weapons related to the case
+### https://example.com/api/get-weapons?case=`case_id`
 Returns a JSON with the list of weapons that are available in the chosen case + the info about the case itself
 
 Response example:
-```
+```JS
 {   
     case: {
         id: 1,
@@ -55,19 +55,16 @@ Response example:
     ],
 }
 ```
-
-// needed for
-// 1) inventory page to show info about possessed weapons;
-// 2) contracts page to show inventory
-// 3) statistics page to show last loot
-# 3. https://example.com/api/get-weapons/
+<br></br>
+## 3. Get a few certain weapons
+### https://example.com/api/get-weapons/
 The query is sent with `request.body` that contains JSON array of the few weapons to be returned
 
 request.body example
 `[1, 2, 5, 6, 9, 11, 12, 56, 57]`
 
 Response example:
-```
+```JS
 [
     {
         id: 1,
@@ -82,14 +79,14 @@ Response example:
     ...
 ]
 ```
+<br></br>
+## 4. Get all the weapons related to some collection
+### https://example.com/api/get-weapons?collection=`collection_id`
 
-
-// for the page of contracts
-# 4. https://example.com/api/get-weapons?collection=`collection name`
 Returns a JSON with the list of weapons that belong to the chosen collection
 
 Response example:
-```
+```JS
 [
     {
         id: 1,
