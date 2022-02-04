@@ -60,13 +60,44 @@ class Weapon (models.Model):
 
 
 # CSGO description
+class Description (models.Model):
+    id = models.AutoField(primary_key=True, null=False, blank=False)
+    text = models.TextField(null=True, blank=True)
+    language = models.CharField(max_length=5, null=False, blank=False)
+    weapon_id = models.ForeignKey(Weapon, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "description"
+    
+    def __str__(self):
+        return  f"{self.language} - {self.weapon_id}"
 
 
 # CSGO case
+class Case (models.Model):
+    id = models.AutoField(primary_key=True, blank=False, null=False)
+    name = models.CharField(max_length=45, blank=False, null=False)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    imageurl = models.CharField(max_length=150, null=False, blank=False)
 
+    class Meta:
+        db_table = "case"
+    
+    def __str__(self):
+        return self.name
 
 # case has weapon
+class Case_has_weapon (models.Model):
+    id = models.AutoField(primary_key=True, blank=False, null=False)
+    case_id = models.ForeignKey(Case, on_delete=models.CASCADE)
+    weapon_id = models.ForeignKey(Weapon, on_delete=models.CASCADE)
 
+    class Meta:
+        db_table = "case_has_weapon"
+        unique_together = (("case_id", "weapon_id"),)
+    
+    def __str__(self):
+        return  f"{self.case_id} -> {self.weapon_id}"
 
 
 
