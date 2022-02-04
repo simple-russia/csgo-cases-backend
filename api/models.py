@@ -49,9 +49,17 @@ class Weapon (models.Model):
     type_id = models.ForeignKey(Type, on_delete=models.CASCADE)
     color_id = models.ForeignKey(Color, on_delete=models.CASCADE)
 
+    STATTRAK_CHOICES = [
+        ("1", "Can be stattrak"),
+        ("0", "Cannot be statrak"),
+    ]
+
+    statrak = models.CharField(max_length=1, choices=STATTRAK_CHOICES, blank=False, null=False, default="1")
+
+
     class Meta:
         db_table = "weapon"
-    
+
     def __str__(self):
         return  f"{self.type_id} {self.style}"
 
@@ -93,6 +101,13 @@ class Case (models.Model):
     name = models.CharField(max_length=45, blank=False, null=False)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     imageurl = models.CharField(max_length=150, null=False, blank=False)
+
+    SPECIAL_CHOICES = [
+        ("0", "Regular case"),
+        ("1", "Special case"),
+    ]
+
+    is_special = models.CharField(max_length=1, choices=SPECIAL_CHOICES, blank=False, null=False, default="0")
 
     class Meta:
         db_table = "case"
