@@ -45,7 +45,6 @@ class Weapon (models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     imageurl = models.CharField(max_length=150, null=False, blank=False)
     statrak = models.BooleanField(blank=False, null=False)
-    rarity = models.IntegerField(blank=False, null=False)
     # foreign keys
     collection_id = models.ForeignKey(Collection, on_delete=models.CASCADE)
     type_id = models.ForeignKey(Type, on_delete=models.CASCADE)
@@ -114,6 +113,7 @@ class Case_has_weapon (models.Model):
     id = models.AutoField(primary_key=True, blank=False, null=False)
     case_id = models.ForeignKey(Case, on_delete=models.CASCADE)
     weapon_id = models.ForeignKey(Weapon, on_delete=models.CASCADE)
+    rarity = models.IntegerField(blank=False, null=False)
     index = models.IntegerField()
 
     class Meta:
