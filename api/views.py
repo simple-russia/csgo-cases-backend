@@ -36,6 +36,7 @@ def get_weapons_view(request, *args, **kwargs):
         
         except Exception as e:
             response = HttpResponse(f'505 error: {e}', status=505)
+            response.__setitem__('Access-Control-Allow-Origin', '*')
             return response
 
 
@@ -51,6 +52,12 @@ def get_weapons_view(request, *args, **kwargs):
             weapons = []
             for i in x:
                 weapon = model_to_dict(i.weapon_id)
+                
+                del weapon['type_id']
+                del weapon['color_id']
+                weapon['type'] = i.weapon_id.type_id
+                weapon['color'] = i.weapon_id.color_id.hex
+                
                 weapons.append(weapon)
             
             response = {
@@ -59,11 +66,14 @@ def get_weapons_view(request, *args, **kwargs):
             }
             response = json.dumps(response, default=mydefault)
             response = HttpResponse(response)
+            response.__setitem__('Access-Control-Allow-Origin', '*')
 
             return response
             
         except Exception as e:
+            print(e)
             response = HttpResponse(f'505 error: {e}', status=505)
+            response.__setitem__('Access-Control-Allow-Origin', '*')
             return response
 
             
@@ -81,18 +91,21 @@ def get_weapons_view(request, *args, **kwargs):
                 response.append( model_to_dict(weapon) )
             
             response = json.dumps(response, default=mydefault)
+            response.__setitem__('Access-Control-Allow-Origin', '*')
             return HttpResponse(response)
             
 
         except Exception as e:
             print(e)
             response = HttpResponse(f'505 error: {e}', status=505)
+            response.__setitem__('Access-Control-Allow-Origin', '*')
             return response
 
 
 
     return HttpResponse('It works! not as expected tho')
 
+# get all the cases
 def get_cases_view(request, *args, **kwargs):
 
     cases = Case.objects.all()

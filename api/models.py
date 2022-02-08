@@ -35,7 +35,7 @@ class Color(models.Model):
         db_table = "color"
     
     def __str__(self):
-        return self.name
+        return f"{self.name} {self.hex}"
 
 
 # CSGO weapon
@@ -44,13 +44,14 @@ class Weapon (models.Model):
     style = models.CharField(max_length=45, null=False, blank=False)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     imageurl = models.CharField(max_length=150, null=False, blank=False)
+    statrak = models.BooleanField(blank=False, null=False)
+    rarity = models.IntegerField(blank=False, null=False)
     # foreign keys
     collection_id = models.ForeignKey(Collection, on_delete=models.CASCADE)
     type_id = models.ForeignKey(Type, on_delete=models.CASCADE)
     color_id = models.ForeignKey(Color, on_delete=models.CASCADE)
 
 
-    statrak = models.BooleanField(blank=False, null=False)
 
 
     class Meta:
@@ -97,6 +98,8 @@ class Case (models.Model):
     name = models.CharField(max_length=45, blank=False, null=False)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     imageurl = models.CharField(max_length=150, null=False, blank=False)
+    is_available = models.BooleanField(default=True)
+    link_name = models.CharField(max_length=45, blank=False, null=False)
 
     is_special = models.BooleanField(blank=False, null=False, default=False)
 
@@ -111,6 +114,7 @@ class Case_has_weapon (models.Model):
     id = models.AutoField(primary_key=True, blank=False, null=False)
     case_id = models.ForeignKey(Case, on_delete=models.CASCADE)
     weapon_id = models.ForeignKey(Weapon, on_delete=models.CASCADE)
+    index = models.IntegerField()
 
     class Meta:
         db_table = "case_has_weapon"
