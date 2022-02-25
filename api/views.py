@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.forms.models import model_to_dict
+from django.views.decorators.csrf import csrf_exempt
 import json
 from decimal import Decimal
 from api.models import Case, Weapon, Case_has_weapon
@@ -14,6 +15,7 @@ def mydefault(obj):
     return str(obj)
 
 # Create your views here.
+@csrf_exempt
 def get_weapons_view(request, *args, **kwargs):
 
     # collection api
@@ -36,7 +38,7 @@ def get_weapons_view(request, *args, **kwargs):
         
         except Exception as e:
             response = HttpResponse(f'505 error: {e}', status=505)
-            response.__setitem__('Access-Control-Allow-Origin', '*')
+            # response.__setitem__('Access-Control-Allow-Origin', '*')
             return response
 
 
@@ -57,6 +59,9 @@ def get_weapons_view(request, *args, **kwargs):
                 del weapon['color_id']
                 weapon['type'] = i.weapon_id.type_id
                 weapon['color'] = i.weapon_id.color_id.hex
+                weapon['color_name'] = i.weapon_id.color_id.name
+                weapon['rarity'] = i.rarity
+                weapon['index'] = i.index
                 
                 weapons.append(weapon)
             
@@ -66,7 +71,7 @@ def get_weapons_view(request, *args, **kwargs):
             }
             response = json.dumps(response, default=mydefault)
             response = HttpResponse(response)
-            response.__setitem__('Access-Control-Allow-Origin', '*')
+            # response.__setitem__('Access-Control-Allow-Origin', '*')
 
             return response
             
@@ -91,14 +96,14 @@ def get_weapons_view(request, *args, **kwargs):
                 response.append( model_to_dict(weapon) )
             
             response = json.dumps(response, default=mydefault)
-            response.__setitem__('Access-Control-Allow-Origin', '*')
+            # response.__setitem__('Access-Control-Allow-Origin', '*')
             return HttpResponse(response)
             
 
         except Exception as e:
             print(e)
             response = HttpResponse(f'505 error: {e}', status=505)
-            response.__setitem__('Access-Control-Allow-Origin', '*')
+            # response.__setitem__('Access-Control-Allow-Origin', '*')
             return response
 
 
@@ -106,6 +111,7 @@ def get_weapons_view(request, *args, **kwargs):
     return HttpResponse('It works! not as expected tho')
 
 # get all the cases
+@csrf_exempt
 def get_cases_view(request, *args, **kwargs):
 
     cases = Case.objects.all()
@@ -118,6 +124,6 @@ def get_cases_view(request, *args, **kwargs):
 
     response = json.dumps(case_list, default=mydefault)
     response = HttpResponse(response)
-    response.__setitem__('Access-Control-Allow-Origin', '*')
+    # response.__setitem__('Access-Control-Allow-Origin', '*')
 
     return response

@@ -1,0 +1,154 @@
+@keyframes appear {
+    from {
+        opacity: 0;
+        /* transform: translateX(100%); */
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+
+body {
+    background-color: #151927;
+    margin: 0;
+}
+
+.hidden {
+    display: none!important;
+}
+
+.panel-cont {
+    width: 600px;
+    height: 600px;
+    margin: 30px auto;
+
+}
+
+.panel-search {
+    width: 100%;
+    height: 70px;
+    position: relative;
+}
+
+.panel-search > .search-box {
+    background-color: #0d0f18;
+    display: block;
+    width: 100%;
+    height: 40px;
+    position: relative;
+}
+
+.search-box > input {
+    width: 100%;
+    height: 100%;
+    padding: 0 110px 0 15px;
+    background-color: transparent;
+    box-sizing: border-box;
+
+    color: #c0bed5;
+    font-family: arial;
+    font-size: 16px;
+
+    border: none;
+    outline: none;
+}
+
+.search-box > .clear {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    right: 70px;
+    top: 0;
+
+    cursor: pointer;
+    user-select: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.search-box > .clear > img {
+    display: block;
+    width: 14px;
+    height: 14px;
+}
+
+.search-box > .clear:hover {
+    filter: brightness(0.8);
+}
+.search-box > .clear:active {
+    filter: brightness(0.6);
+}
+
+.search-box > input:focus {
+    border: none;
+    outline: 2px #b7b7e0 solid;   
+}
+
+.search-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 70px;
+    height: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    background-color: #66677c;
+    background-image: linear-gradient(0deg, #3f4562, transparent);
+    color: #b2a9c3;
+    box-shadow: inset 0 0 1px 1px #6a6c78;
+    text-shadow: 0 0 1px rgb(0, 0, 0);
+    user-select: none;
+
+    cursor: pointer;
+}
+
+.search-btn:hover {
+    filter: brightness(0.8);
+}
+.search-btn:active {
+    filter: brightness(0.6);
+}
+
+.filter-btn {
+    position: absolute;
+    right: calc(100% + 15px);
+    top: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    background-color: #66677c;
+    background-image: linear-gradient(0deg, #3f4562, transparent);
+    color: #b2a9c3;
+    box-shadow: inset 0 0 1px 1px #6a6c78;
+    text-shadow: 0 0 1px rgb(0, 0, 0);
+    user-select: none;
+
+    cursor: pointer;
+}
+
+.filter-btn:hover {
+    filter: brightness(0.8);
+}
+.filter-btn:active {
+    filter: brightness(0.6);
+}
+
+.filter-btn > img {
+    display: block;
+    width: 20px;
+    height: 20px;
+    transform: rotate(90deg);
+}

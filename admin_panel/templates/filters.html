@@ -1,0 +1,73 @@
+{% load static %}
+<div class="filters-modal hidden">
+    <link rel="stylesheet" href="{% static 'css/filters.css' %}">
+
+    <div class="close-filter-modal">
+        <img src="{% static 'img/cross.svg' %}">
+    </div>
+
+        <div class="filters-main">
+
+            <div class="case-or-weapon">
+                <div class="pick pick-cases">
+                    <span>CASES</span>
+                    <div id="cases" class="pick-checkbox active"></div>
+                </div>
+                <div class="pick pick-weapon">
+                    <span>WEAPONS</span>
+                    <div id="weapons" class="pick-checkbox"></div>
+                </div>
+            </div>
+            
+            <div class="case-options">
+                <div class="price-range" style="--option-name: 'price' ">
+                    <label>FROM:</label>
+                    <input class="min-range" type="text">
+                    <i>$</i>
+                    <label>TO:</label>
+                    <input class="max-range" type="text">
+                    <i>$</i>
+                </div>
+            </div>
+            
+            <div class="weapon-options hidden">
+                <div class="price-range" style="--option-name: 'price' ">
+                    <label>FROM:</label>
+                    <input class="min-range" type="text">
+                    <i>$</i>
+                    <label>TO:</label>
+                    <input class="max-range" type="text">
+                    <i>$</i>
+                </div>
+
+                <div class="color-options pick-grid" style="--option-name: 'rarity' ">
+                    {% for color in colors %}
+                    <div>
+                        <div data-id="{{color.id}}" class="pick-checkbox"></div>
+                        <span>{{color.name}}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="type-options pick-grid" style="--option-name: 'type' ">
+                    {% for type in types %}
+                    <div>
+                        <div data-id="{{type.id}}" class="pick-checkbox"></div>
+                        <span>{{type.name}}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="collection-options pick-grid" style="--option-name: 'collection' ">
+                    {% for collection in collections %}
+                    <div>
+                        <div data-id="{{collection.id}}" class="pick-checkbox"></div>
+                        <span>{{collection.name}}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="apply-filters">Apply filters</div>
+        </div>
+</div>
