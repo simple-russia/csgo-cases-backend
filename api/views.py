@@ -17,6 +17,20 @@ def mydefault(obj):
         return int(obj)
     return str(obj)
 
+
+def create_api_response(status='OK', status_message=None, isError=False, action=None, payload=None):
+    message = {
+        'status': status,
+        'status_message': status_message,
+        'isError': isError,
+        'action': action,
+        'payload': payload,
+    }
+    
+    message = json.dumps(message, default=mydefault)
+
+    return HttpResponse(message)
+
 # Create your views here.
 @csrf_exempt
 def get_weapons_view(request, *args, **kwargs):
@@ -174,7 +188,13 @@ def search_view(request, *args, **kwargs):
 def create_view(request, *args, **kwargs):
 
     if not request.user.is_authenticated or request.method != 'POST':
-        response = HttpResponse('error occured')
+        response = create_api_response(
+            status='OK',
+            status_message='succesfully added a weapon',
+            isError=False,
+            action='CREATE WEAPON',
+        )
+        
         return response
 
     # check if the action is too early
@@ -246,7 +266,12 @@ def create_view(request, *args, **kwargs):
     new_action.save()
     # ===============
 
+    # def create_api_response(status='OK', status_message=None, isError=False, action=None, payload=None):
+    response = create_api_response(
+        status='OK',
+        status_message='succesfully added a weapon',
+        isError=False,
+        action='CREATE WEAPON',
+    )
 
-
-    response = HttpResponse('[2, 3]')
     return response
