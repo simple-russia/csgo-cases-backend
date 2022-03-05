@@ -5,10 +5,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/admin_panel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/create.css' %}">
+    <script defer src="{% static 'js/create_case.js' %}"></script>
     <title>Document</title>
+    {% csrf_token %}
 </head>
 <body>
-    create case
+    <div class="main-cont">
+        <a href="/admin-panel/" class="back-home">Back to main page</a>
+
+        <div class="photo-cont line-below">
+            <div class="photo">
+                <img>
+            </div>
+            <div class="upload-btn">UPLOAD IMAGE</div>
+            <input id="img-upload" type="file" hidden>
+        </div>
+
+        <div class="price-cont">
+            <label>PRICE:</label>
+            <input type="text" pattern="[0-9]+">
+        </div>
+        <div class="name-cont">
+            <label>NAME:</label>
+            <input type="text">
+        </div>
+
+        <div class="create-weapon">
+            CREATE CASE
+        </div>
+    </div>
+
+    <div class="message-cont">
+
+    </div>
 </body>
 </html>

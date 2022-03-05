@@ -192,7 +192,6 @@ def create_view(request, *args, **kwargs):
             status='ERROR',
             status_message='not logged in',
             isError=True,
-            action='CREATE WEAPON',
         )
 
         return response
@@ -209,7 +208,6 @@ def create_view(request, *args, **kwargs):
             status='ERROR',
             status_message=f'couldn\'t do an action: wait {actions_cooldown} since the last action',
             isError=True,
-            action='CREATE WEAPON',
         )
 
         return response
@@ -224,6 +222,7 @@ def create_view(request, *args, **kwargs):
 
 
     # creating the file in the file system
+    
     import urllib
 
     missing_padding = len(body['image']) % 4
