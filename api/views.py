@@ -4,7 +4,10 @@ from django.forms.models import model_to_dict
 from django.views.decorators.csrf import csrf_exempt
 import json
 from decimal import Decimal
-from api.models import Case, Weapon, Case_has_weapon
+from api.models import Case, Weapon, Case_has_weapon, Action, Action_type, Collection, Color, Type
+import time
+
+actions_cooldown = 5 # seconds of cooldown between doing any actions
 
 # parsing function for JSON
 def mydefault(obj):
@@ -126,4 +129,124 @@ def get_cases_view(request, *args, **kwargs):
     response = HttpResponse(response)
     # response.__setitem__('Access-Control-Allow-Origin', '*')
 
+    return response
+
+
+@csrf_exempt
+def search_view(request, *args, **kwargs):
+    body = request.body.decode("utf-8")
+    body = json.loads(body)
+
+    pick = body["pick"]
+    
+    results = []
+
+    if pick == "weapons":
+        min_price = body['filter_weapons']['min_price']
+        max_price = body['filter_weapons']['max_price']
+        colors = body['filter_weapons']['colors']
+        types = body['filter_weapons']['types']
+        collections = body['filter_weapons']['collections']
+
+        query = f"""
+        SELECT * FROM weapon
+        WHERE `weapon`.`color_id` IN ({', '.join([str(i) for i in colors])})
+        """
+        print(query)
+
+        weapons = Weapon.objects.raw(query)
+        for i in weapons:
+            print(i, i.price)
+        
+        for i in weapons:
+            results.append(model_to_dict(i))
+        
+
+        else:
+            pass
+
+
+    response = json.dumps(results, default=mydefault)
+    response = HttpResponse(response)
+
+    return response
+
+def create_view(request, *args, **kwargs):
+
+    if not request.user.is_authenticated or request.method != 'POST':
+        response = HttpResponse('error occured')
+        return response
+
+    # check if the action is too early
+    query = f"""
+    SELECT * FROM action
+    WHERE user_id = {request.user.id}
+    AND time > {int(time.time()) - actions_cooldown}
+    """
+    results = Action.objects.raw(query)
+    if len(results) > 0:
+        response = HttpResponse('error occured')
+        return response
+
+    # ======
+
+
+    body = request.body.decode("utf-8")
+    body = json.loads(body)
+    data = body['image']
+    
+
+
+    # creating the file in the file system
+    import urllib
+
+    missing_padding = len(body['image']) % 4
+    if missing_padding:
+        data += '='* (4 - missing_padding)
+
+    response = urllib.request.urlopen(data)
+
+    path = 'C:/users/alexe/desktop/'
+    random_id = ''.join(str(time.time()).split('.'))[:14]
+    with open(f'{path}{random_id}.png', 'wb') as f:
+        f.write(response.file.read())
+    # ===============
+
+
+    # adding a new weapon
+    style = body['style']
+    price = body['price']
+    imageurl = f'weapons/{random_id}.png'
+    statrak = True
+
+    collection = Collection.objects.filter(id=body['collection'])[0]
+    color = Color.objects.filter(id=body['color'])[0]
+    type = Type.objects.filter(id=body['type'])[0]
+
+    new_weapon = Weapon(
+        style=style,
+        price=price,
+        imageurl=imageurl,
+        statrak=statrak,
+        collection=collection,
+        color=color,
+        type=type,
+    )
+    new_weapon.save()
+    # ===============
+
+
+    # adding an action entry to the database
+    action_time = int(time.time())
+    user = request.user
+    action = Action_type.objects.filter(id=2)[0]
+    object_id = new_weapon.id
+
+    new_action = Action(time=action_time, user=user, type=action, object_id=object_id)
+    new_action.save()
+    # ===============
+
+
+
+    response = HttpResponse('[2, 3]')
     return response

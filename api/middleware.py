@@ -11,6 +11,6 @@ class Cors:
 
         # after view
 
-        response['Access-Control-Allow-Origin'] = 'http://192.168.43.247:3000'
+        response['Access-Control-Allow-Origin'] = '*'
 
         return response

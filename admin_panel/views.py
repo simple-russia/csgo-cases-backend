@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login
 def reload():
     return HttpResponse(
         """<title>Processing...</title><script>
-        window.location = window.location.pathname;
+        window.location = "/admin-panel";
         </script>"""
     )
 
@@ -22,6 +22,7 @@ def admin_panel_view(request, *args, **kwargs):
     context = {}
 
     if request.method == 'POST':
+        print('post')
 
         try:
             username = request.POST['new-username']
@@ -41,30 +42,40 @@ def admin_panel_view(request, *args, **kwargs):
         response = render(request, 'login.html', context)
         return response
 
-    from api.models import Type, Color, Collection
 
+
+
+    from api.models import Type, Color, Collection
     colors = []
     types = []
     collections = []
-
-
     for i in Color.objects.all():
         colors.append(model_to_dict(i))
     for i in Type.objects.all():
         types.append(model_to_dict(i))
     for i in Collection.objects.all():
         collections.append(model_to_dict(i))
-    
-
-
-    # print(colors, types, collections)
-
-
     context = {
         'colors': colors,
         'types': types,
         'collections': collections,
     }
+    
+
+    # create weapon/case
+    try:
+        create = request.GET["create"]
+        print(create)
+        if create == "case":
+            response = render(request, 'create_case.html', context)
+        else:
+            response = render(request, 'create_weapon.html', context)
+        
+        return response
+    
+    except:
+        pass
+
 
     response = render(request, 'admin_panel.html', context)
 

@@ -1,6 +1,6 @@
 
 const filter = document.querySelector('.filter-btn');
-const search = document.querySelector('.search-btn');
+const search_btn = document.querySelector('.search-btn');
 const filter_modal = document.querySelector('.filters-modal');
 const close_filter = document.querySelector('.close-filter-modal');
 const clear_search = document.querySelector('.clear');
@@ -142,3 +142,24 @@ const applyFilters = () => {
 
 const applyButton = document.querySelector('.apply-filters');
 applyButton.addEventListener('click', applyFilters);
+
+
+document.querySelector('#add-weapon').addEventListener('click', _ => window.location = window.location.pathname + '?create=weapon');
+document.querySelector('#add-case').addEventListener('click', _ => window.location = window.location.pathname + '?create=case');
+
+
+
+const search = () => {
+    console.log(filter_options)
+    
+    const url = "http://192.168.43.247:80/api/search"
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify( filter_options ),
+    })
+    .then(response => response.json())
+    .then(data => console.log(data));
+}
+search_btn.addEventListener('click', search);
+
+

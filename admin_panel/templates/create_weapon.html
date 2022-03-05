@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/create.css' %}">
+    <script defer src="{% static 'js/create.js' %}"></script>
+    <title>Document</title>
+    {% csrf_token %}
+</head>
+<body>
+    <div class="main-cont">
+        <div class="photo-cont line-below">
+            <div class="photo">
+                <img>
+            </div>
+            <div class="upload-btn">UPLOAD IMAGE</div>
+            <input id="img-upload" type="file" hidden>
+        </div>
+
+        <div class="type-cont line-below">
+            <label>TYPE:</label>
+            <select>
+                {% for type in types %}
+                <option value="{{type.id}}">{{type.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="collection-cont line-below">
+            <label>COLLECTION:</label>
+            <select>
+                {% for collection in collections %}
+                <option value="{{collection.id}}">{{collection.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="color-cont line-belowt">
+            <label>COLOR:</label>
+            <select>
+                {% for color in colors %}
+                <option value="{{color.id}}"">{{color.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="price-cont">
+            <label>PRICE:</label>
+            <input type="text" pattern="[0-9]+">
+        </div>
+        <div class="style-cont">
+            <label>STYLE:</label>
+            <input type="text">
+        </div>
+
+        <div class="create-weapon">
+            CREATE WEAPON
+        </div>
+    </div>
+</body>
+</html>

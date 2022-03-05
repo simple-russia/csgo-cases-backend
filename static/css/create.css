@@ -1,0 +1,140 @@
+body {
+    background-color: #151927;
+    margin: 0;
+}
+
+.line-below::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    height: 1px;
+    background-image: linear-gradient(90deg, transparent, rgba(113, 124, 133, 0.2), transparent);
+}
+
+.main-cont {
+    margin: 0px auto;
+    width: 400px;
+    min-height: 200px;
+    background-color: rgba(15, 17, 31, 0.5);
+    padding: 20px;
+    padding-bottom: 80px;
+    box-shadow: 0 0 10px 0 #0000005e;
+    border: 1px solid #2e353d;
+    position: relative;
+}
+
+.main-cont > * {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px 0;
+    position: relative;
+}
+
+select {
+    min-width: 110px;
+    color: #dedeed;
+    background: #2b3045;
+    padding: 3px 10px;
+}
+select:focus {
+    outline: none;
+}
+label {
+    min-width: 110px;
+    color: #dedeed;
+    padding: 7px 10px;
+    font-family: arial;
+    font-size: 13px;
+    min-width: 88px;
+    display: inline-block;
+    text-align: end;
+}
+input[type="text"] {
+    background: #0e0f17;
+    outline: none;
+    box-shadow: none;
+    border: 1px solid #353a4e;
+    width: 167px;
+    height: 27px;
+    color: #b3bad8;
+    padding-left: 10px;
+}
+
+.photo-cont {
+    width: 100%;
+    height: 270px;
+    position: relative;
+    padding: 0px!important;
+}
+.photo {
+    border: 2px dashed #636673;
+    margin: auto;
+    width: 200px;
+    height: 200px;
+    background-color: #2b3045;
+    box-sizing: border-box;
+    
+    padding: 10px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+.photo > img {
+    transform: scale(0.8);
+}
+
+.upload-btn {
+    width: 156px;
+    padding: 9px 0;
+    background-color: #3f54a9;
+    margin: 17px auto;
+    text-align: center;
+    font-family: arial;
+    font-size: 12px;
+    color: #d0d7e1;
+    border-radius: 3px;
+    cursor: pointer;
+    user-select: none;
+}
+.upload-btn:hover {
+    filter: brightness(0.8);
+}
+.upload-btn:active {
+    filter: brightness(0.6);
+}
+
+.create-weapon {
+    position: absolute;
+    bottom: 5px;
+    width: 210px;
+    padding: 15px 0;
+    background-color: #2d759f;
+    margin: 17px auto;
+    text-align: center;
+    font-family: arial;
+    font-size: 12px;
+    color: #d0d7e1;
+    border-radius: 3px;
+    cursor: pointer;
+    user-select: none;
+    left: 115px;
+}
+.create-weapon:hover {
+    filter: brightness(0.8);
+}
+.create-weapon:active {
+    filter: brightness(0.6);
+}
+
+input:invalid {
+    outline: 2px #b81b1b solid;
+}
+
+.blocked {
+    pointer-events: none;
+    background-color: #4d515c;
+    cursor: default;
+    color: #8e8e8e;
+}
