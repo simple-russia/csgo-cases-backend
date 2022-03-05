@@ -47,6 +47,25 @@ upload_inp.addEventListener('change', (event) => {
     }
 })
 
+
+
+const displayMessage = (message) => {
+    const text = `${message.action} ${message.status}: ${message.status_message}`;
+
+    const msg_cont = document.querySelector('.message-cont');
+
+    const msg_element = document.createElement('div');
+    msg_element.classList.add('message');
+    msg_element.classList.add(message.isError ? 'error' : 'success');
+    msg_element.innerText = text;
+
+    msg_cont.appendChild(msg_element);
+
+    setTimeout( _ => { try { msg_element.remove() } catch(e) {null} }, 5000);
+}
+
+
+
 const createWeapon = () => {
 
     const data = {}
@@ -70,7 +89,13 @@ const createWeapon = () => {
         }
     })
     .then(response => response.json())
-    .then(data => console.log(data));
+    .then(data => {
+        displayMessage(data);
+        if (!data.isError) {
+            console.log('redirect in 5 seconds');
+            setTimeout( _ => window.location = `/admin-panel/?weapon=${data.payload}` , 5000);
+        }
+    });
 }
 
 create_btn.addEventListener('click', createWeapon);

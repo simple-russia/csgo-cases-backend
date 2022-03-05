@@ -189,12 +189,12 @@ def create_view(request, *args, **kwargs):
 
     if not request.user.is_authenticated or request.method != 'POST':
         response = create_api_response(
-            status='OK',
-            status_message='succesfully added a weapon',
-            isError=False,
+            status='ERROR',
+            status_message='not logged in',
+            isError=True,
             action='CREATE WEAPON',
         )
-        
+
         return response
 
     # check if the action is too early
@@ -205,7 +205,13 @@ def create_view(request, *args, **kwargs):
     """
     results = Action.objects.raw(query)
     if len(results) > 0:
-        response = HttpResponse('error occured')
+        response = create_api_response(
+            status='ERROR',
+            status_message=f'couldn\'t do an action: wait {actions_cooldown} since the last action',
+            isError=True,
+            action='CREATE WEAPON',
+        )
+
         return response
 
     # ======
@@ -272,6 +278,7 @@ def create_view(request, *args, **kwargs):
         status_message='succesfully added a weapon',
         isError=False,
         action='CREATE WEAPON',
+        payload=new_weapon.id,
     )
 
     return response

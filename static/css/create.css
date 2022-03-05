@@ -138,3 +138,74 @@ input:invalid {
     cursor: default;
     color: #8e8e8e;
 }
+
+.message-cont {
+    position: fixed;
+    width: 400px;
+    left: 10px;
+    bottom: 10px;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        bottom: -200px;
+    }
+    to {
+        opacity: 1;
+        bottom: 0;
+    }
+}
+@keyframes disappear {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+.message {
+    position: relative;
+    width: 100%;
+    padding: 15px 40px 15px 15px;
+    box-sizing: border-box;
+    background-color: #3a3d4a;
+    border-radius: 6px;
+    font-family: arial;
+    color: white;
+    font-size: 13px;
+
+    animation: appear 220ms linear, 130ms linear 4880ms disappear;
+}
+.message:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.message.success {
+    background-color: #4da154;
+}
+.message.error {
+    background-color: #a7535d;
+}
+
+.back-home {
+    position: fixed;
+    top: 20px;
+    left: 30px;
+    padding: 10px 22px;
+    display: inline-block;
+    border-radius: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    width: auto;
+    text-decoration: none;
+    background-color: #3b4152;
+    color: #bbbdc8;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px #6d717a solid;
+}
+
+.back-home:hover {
+    filter: brightness(0.8);
+}
